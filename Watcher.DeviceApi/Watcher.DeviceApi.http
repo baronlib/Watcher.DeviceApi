@@ -1,0 +1,6 @@
+@Watcher.DeviceApi_HostAddress = http://localhost:5119
+
+GET {{Watcher.DeviceApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
