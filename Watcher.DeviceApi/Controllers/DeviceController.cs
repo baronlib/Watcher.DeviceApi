@@ -1,19 +1,38 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using CoordinateSharp;
 using Watcher.DeviceLibrary;
+using Microsoft.Extensions.Options;
+using Watcher.DeviceApi.Models;
 
 namespace Watcher.DeviceApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class DeviceController(IDeviceRepository deviceRepository) : ControllerBase
+    public class DeviceController(
+        IDeviceRepository deviceRepository,
+        IDeviceTimer deviceTimer,
+        IOptions<Location> locationOptions) : ControllerBase
     {
-        [HttpPost("turn-on")]
-        public async Task<IActionResult> TurnOn([FromQuery] string uniqueId, [FromQuery] TimeSpan? duration = null, [FromQuery] bool onlyIfDark = false)
+        private readonly Location _location = locationOptions.Value;
+
+        [HttpPost("turn-on/{uniqueId}")]
+        public async Task<IActionResult> TurnOn(string uniqueId, [FromQuery] TimeSpan? duration = null, [FromQuery] bool onlyIfDark = false)
         {
             IDevice? device = await deviceRepository.Get(uniqueId);
             if (device == null)
             {
                 return NotFound($"Device with UniqueId {uniqueId} not found.");
+            }
+
+            if (onlyIfDark)
+            {
+                var c = new Coordinate(_location.Latitude, _location.Longitude, DateTime.UtcNow);
+                Celestial cel = c.CelestialInfo;
+                if (cel.IsSunUp)
+                {
+                    return Ok($"Device {device.Name} NOT turned on, as the sun is up.");
+                }
             }
 
             if (duration.HasValue)
@@ -23,7 +42,7 @@ namespace Watcher.DeviceApi.Controllers
                     return BadRequest("Duration must be at least 1 second.");
                 }
 
-                await device.TurnOn(duration.Value);
+                await deviceTimer.TurnOn(device, duration.Value);
             }
             else
             {

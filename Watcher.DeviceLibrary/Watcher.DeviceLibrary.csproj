@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="LifxNet" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
   </ItemGroup>
 
 </Project>

@@ -11,6 +11,11 @@ public class InMemoryDeviceRepository : IDeviceRepository
         {
             Name = "Front porch light",
             UniqueId = "front-light"
+        },
+        new TpLinkPowerPoint("")
+        {
+            Name = "LED Flood Light",
+            UniqueId = "power-point"
         }
     ];
 

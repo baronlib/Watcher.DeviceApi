@@ -11,7 +11,7 @@ public class LifxBulb(string hostName) : IDevice
     public async Task EnsureInitialised()
     {
         // TODO - not thread safe!
-        if (_client != null)
+        if (_client == null)
         {
             _client = await LifxClient.CreateAsync();
         }
