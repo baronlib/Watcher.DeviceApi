@@ -7,15 +7,17 @@ public class InMemoryDeviceRepository : IDeviceRepository
 {
     private readonly List<IDevice> _devices =
     [
-        new LifxBulb("192.168.1.27")
+        new LifxBulb
         {
             Name = "Front porch light",
-            UniqueId = "front-light"
+            UniqueId = "front-light",
+            IpAddress = "192.168.1.27"
         },
-        new TpLinkPowerPoint("")
+        new TpLinkPowerPoint
         {
             Name = "LED Flood Light",
-            UniqueId = "power-point"
+            UniqueId = "power-point",
+            Ip = "192.168.1.4"
         }
     ];
 

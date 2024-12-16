@@ -2,8 +2,10 @@
 
 namespace Watcher.DeviceLibrary.Devices;
 
-public class TpLinkPowerPoint(string ip) : IDevice
+public class TpLinkPowerPoint() : IDevice
 {
+    public string Ip { get; set; } = string.Empty;
+
     private const int Port = 9999;
 
     private const string OffCommand = "AAAAKtDygfiL/5r31e+UtsWg1Iv5nPCR6LfEsNGlwOLYo4HyhueT9tTu3qPeow==";
@@ -14,7 +16,7 @@ public class TpLinkPowerPoint(string ip) : IDevice
     {
         try
         {
-            var client = new TcpClient(ip, Port);
+            var client = new TcpClient(Ip, Port);
             Byte[] data = Convert.FromBase64String(command);
             NetworkStream stream = client.GetStream();
             stream.Write(data, 0, data.Length);
