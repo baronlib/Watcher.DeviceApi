@@ -2,9 +2,9 @@
 
 public interface IDevice
 {
-    string Name { get; set; }
+    string Id { get; set; }
 
-    string UniqueId { get; set; }
+    string Description { get; set; }
 
     string Type { get; }
 

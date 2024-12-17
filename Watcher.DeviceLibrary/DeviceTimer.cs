@@ -7,10 +7,16 @@ namespace Watcher.DeviceLibrary
     {
         private static readonly ConcurrentDictionary<string, CancellationTokenSource> CancellationTokens = new();
 
+        /// <summary>
+        /// Turns on a device for a particular duration of time, before turning it off again asynchronously.
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="duration"></param>
+        /// <returns></returns>
         public async Task TurnOn(IDevice device, TimeSpan duration)
         {
             // Cancel any existing duration in waiting for this device
-            if (CancellationTokens.TryGetValue(device.UniqueId, out var existingTokenSource))
+            if (CancellationTokens.TryGetValue(device.Id, out var existingTokenSource))
             {
                 await existingTokenSource.CancelAsync();
                 existingTokenSource.Dispose();
@@ -18,7 +24,7 @@ namespace Watcher.DeviceLibrary
 
             // Create a new cancellation token source
             var cancellationTokenSource = new CancellationTokenSource();
-            CancellationTokens[device.UniqueId] = cancellationTokenSource;
+            CancellationTokens[device.Id] = cancellationTokenSource;
 
             await device.TurnOn();
 
@@ -30,7 +36,7 @@ namespace Watcher.DeviceLibrary
                     await Task.Delay(duration, cancellationTokenSource.Token);
                     await device.TurnOff();
 
-                    logger.LogInformation($"Device {device.UniqueId} turned off after waiting {duration}");
+                    logger.LogInformation($"Device {device.Id} turned off after waiting {duration}");
                 }
                 catch (TaskCanceledException)
                 {

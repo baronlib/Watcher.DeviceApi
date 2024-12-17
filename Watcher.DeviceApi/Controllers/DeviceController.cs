@@ -41,7 +41,7 @@ namespace Watcher.DeviceApi.Controllers
                 Celestial cel = c.CelestialInfo;
                 if (cel.IsSunUp)
                 {
-                    return Ok($"Device {device.Name} NOT turned on, as the sun is up.");
+                    return Ok($"Device {device.Description} NOT turned on, as the sun is up.");
                 }
             }
 
@@ -59,7 +59,7 @@ namespace Watcher.DeviceApi.Controllers
                 await device.TurnOn();
             }
 
-            return Ok($"Device {device.Name} turned on.");
+            return Ok($"Device {device.Description} turned on.");
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Watcher.DeviceApi.Controllers
             }
 
             await device.TurnOff();
-            return Ok($"Device {device.Name} turned off.");
+            return Ok($"Device {device.Description} turned off.");
         }
     }
 }

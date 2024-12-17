@@ -4,8 +4,10 @@ namespace Watcher.DeviceLibrary.Devices;
 
 public class TpLinkPowerPoint() : IDevice
 {
+    public string Id { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string Type => "TPLink Power Point";
     public string Ip { get; set; } = string.Empty;
-
     private const int Port = 9999;
 
     private const string OffCommand = "AAAAKtDygfiL/5r31e+UtsWg1Iv5nPCR6LfEsNGlwOLYo4HyhueT9tTu3qPeow==";
@@ -32,12 +34,6 @@ public class TpLinkPowerPoint() : IDevice
             Console.WriteLine("Unable to send command to TPLink PowerPoint");
         }
     }
-
-    public string Name { get; set; } = string.Empty;
-
-    public string UniqueId { get; set; } = Guid.Empty.ToString();
-
-    public string Type => "TPLink Power Point";
 
     public Task TurnOn()
     {
