@@ -10,5 +10,12 @@
     "Description": "LED Flood Light",
     "Ip": "192.168.1.4",
     "Type": "TP-Link HS100"
+  },
+  {
+    "Id": "siren",
+    "Description": "Alarm siren",
+    "SoundFile": "siren.mp3",
+    "Volume": 100,
+    "Type":  "Alarm"
   }
 ]
