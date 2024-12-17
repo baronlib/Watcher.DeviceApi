@@ -6,7 +6,7 @@ public class TpLinkPowerPoint() : IDevice
 {
     public string Id { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public string Type => "TPLink Power Point";
+    public string Type => "TP-Link HS100";
     public string Ip { get; set; } = string.Empty;
     private const int Port = 9999;
 

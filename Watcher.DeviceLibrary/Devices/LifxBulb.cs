@@ -7,7 +7,7 @@ public class LifxBulb : IDevice
 {
     public string Id { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public string Type => "Lifx Bulb";
+    public string Type => "LIFX Color 1000";
     public string IpAddress { get; set; } = string.Empty;
 
     private async Task<ILight> Connect()
