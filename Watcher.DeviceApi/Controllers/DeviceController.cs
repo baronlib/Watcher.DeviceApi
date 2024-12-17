@@ -29,7 +29,7 @@ namespace Watcher.DeviceApi.Controllers
         [HttpPost("turn-on/{uniqueId}")]
         public async Task<IActionResult> TurnOn(string uniqueId, [FromQuery] TimeSpan? duration = null, [FromQuery] bool onlyAfterDark = false)
         {
-            IDevice? device = await deviceRepository.Get(uniqueId);
+            IDevice? device = deviceRepository.Get(uniqueId);
             if (device == null)
             {
                 return NotFound($"Device with UniqueId {uniqueId} not found.");
@@ -72,7 +72,7 @@ namespace Watcher.DeviceApi.Controllers
         [HttpPost("turn-off/{uniqueId}")]
         public async Task<IActionResult> TurnOff(string uniqueId)
         {
-            IDevice? device = await deviceRepository.Get(uniqueId);
+            IDevice? device = deviceRepository.Get(uniqueId);
             if (device == null)
             {
                 return NotFound($"Device with UniqueId {uniqueId} not found.");

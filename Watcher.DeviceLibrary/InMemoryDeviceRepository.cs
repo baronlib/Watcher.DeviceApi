@@ -1,28 +1,29 @@
-﻿using Watcher.DeviceLibrary.Devices;
+﻿using System.Text.Json;
+using Watcher.DeviceLibrary.Devices;
 
 namespace Watcher.DeviceLibrary;
 
 public class InMemoryDeviceRepository : IDeviceRepository
 {
-    private readonly List<IDevice> _devices =
-    [
-        new LifxBulb
-        {
-            Description = "Front porch light",
-            Id = "front-light",
-            IpAddress = "192.168.1.27"
-        },
-        new TpLinkPowerPoint
-        {
-            Description = "LED Flood Light",
-            Id = "power-point",
-            Ip = "192.168.1.4"
-        }
-    ];
+    private readonly Dictionary<string, IDevice> _idToDeviceDictionary = new();
 
-    public Task<IDevice?> Get(string uniqueId)
+    public InMemoryDeviceRepository()
     {
-        var device = _devices.FirstOrDefault(d => d.Id == uniqueId);
-        return Task.FromResult(device);
+        var jsonFile = File.ReadAllBytes("devices.json");
+        var options = new JsonSerializerOptions
+        {
+            Converters = { new DeviceConverter() }
+        };
+
+        var devices = JsonSerializer.Deserialize<List<IDevice>>(jsonFile, options);
+        if (devices != null)
+        {
+            _idToDeviceDictionary = devices.ToDictionary(d => d.Id);
+        }
+    }
+
+    public IDevice? Get(string uniqueId)
+    {
+        return _idToDeviceDictionary.GetValueOrDefault(uniqueId);
     }
 }

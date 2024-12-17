@@ -2,5 +2,5 @@
 
 public interface IDeviceRepository
 {
-    Task<IDevice?> Get(string uniqueId);
+    IDevice? Get(string uniqueId);
 }

@@ -1,0 +1,14 @@
+[
+  {
+    "Id": "front-light",
+    "Description": "Front porch light",
+    "IpAddress": "192.168.1.27",
+    "Type": "LIFX Color 1000"
+  },
+  {
+    "Id": "power-point",
+    "Description": "LED Flood Light",
+    "Ip": "192.168.1.4",
+    "Type": "TP-Link HS100"
+  }
+]
