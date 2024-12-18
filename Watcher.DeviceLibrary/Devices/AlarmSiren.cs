@@ -11,11 +11,13 @@ public class AlarmSiren : IDevice
 
     public Task TurnOn()
     {
+        // TODO - Open the SoundFile and play through the Windows service running on the service
         return Task.CompletedTask;
     }
 
     public Task TurnOff()
     {
+        // TODO - Call the Windows service to stop playing the sound
         return Task.CompletedTask;
     }
 }
